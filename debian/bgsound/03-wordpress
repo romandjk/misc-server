@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+source wordpress.sh
+
+curl --remote-name https://wordpress.org/latest.tar.gz
+tar xzvf latest.tar.gz
+
+cd wordpress
+mv wp-config-sample.php wp-config.php
+sed -i s/database_name_here/$WP_DB_NAME/ wp-config.php
+sed -i s/username_here/$WP_DB_USERNAME/ wp-config.php
+sed -i s/password_here/$WP_DB_PASSWORD/ wp-config.php
+cd ..
+
+chown -R www-data:www-data wordpress
+mv wordpress /var/www/blog.whatwg.org
